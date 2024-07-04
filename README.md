@@ -1,3 +1,7 @@
+# missav-ytdlp-plugin
+generated from [smalltownjj/yt-dlp-plugin-missav](https://github.com/smalltownjj/yt-dlp-plugin-missav)
+
+
 This repository contains a sample plugin package for [yt-dlp](https://github.com/yt-dlp/yt-dlp#readme). 
 
 See [yt-dlp plugins](https://github.com/yt-dlp/yt-dlp#plugins) for more details.
