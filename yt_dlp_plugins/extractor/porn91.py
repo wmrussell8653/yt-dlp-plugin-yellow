@@ -68,7 +68,9 @@ class Porn91IE(InfoExtractor):
 
         return {
             'id': video_id,
-            'title': remove_end(self._html_extract_title(webpage).replace('\n', ''), 'Chinese homemade video').strip(),
+            # 'title': remove_end(self._html_extract_title(webpage).replace('\n', ''), 'Chinese homemade video').strip(),
+            'title': self._search_regex(
+                r'<h4\s+class=["\']login_register_header["\'][^>]*>\s*([^<]+)\s*</h4>', webpage, 'title', default=None),
             'formats': formats,
             'subtitles': subtitles,
             'upload_date': unified_strdate(self._search_regex(
@@ -93,4 +95,3 @@ class Porn91IE(InfoExtractor):
             subtitles = {}
 
         return formats, subtitles
-
