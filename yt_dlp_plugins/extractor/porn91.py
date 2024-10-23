@@ -1,12 +1,11 @@
 import urllib.parse
 from yt_dlp.extractor.common import InfoExtractor
 from yt_dlp.utils import (
+    ExtractorError,
     determine_ext,
     int_or_none,
     parse_duration,
-    remove_end,
     unified_strdate,
-    ExtractorError,
 )
 
 
@@ -27,7 +26,7 @@ class Porn91IE(InfoExtractor):
             'comment_count': int,
             'view_count': int,
             'age_limit': 18,
-        }
+        },
     }, {
         'url': 'https://91porn.com/view_video.php?viewkey=7ef0cf3d362c699ab91c',
         'md5': 'f8fd50540468a6d795378cd778b40226',
@@ -41,7 +40,7 @@ class Porn91IE(InfoExtractor):
             'comment_count': int,
             'view_count': int,
             'age_limit': 18,
-        }
+        },
     }]
 
     def _real_extract(self, url):
@@ -49,7 +48,7 @@ class Porn91IE(InfoExtractor):
         self._set_cookie('91porn.com', 'language', 'cn_CN')
 
         webpage = self._download_webpage(
-            'http://91porn.com/view_video.php?viewkey=%s' % video_id, video_id)
+            f'http://91porn.com/view_video.php?viewkey={video_id}', video_id)
 
         if '视频不存在,可能已经被删除或者被举报为不良内容!' in webpage:
             raise ExtractorError('91 Porn says: Video does not exist', expected=True)
