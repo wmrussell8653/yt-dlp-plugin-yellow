@@ -12,12 +12,18 @@ See [yt-dlp plugins](https://github.com/yt-dlp/yt-dlp#plugins) for more details.
 Requires yt-dlp `2023.01.02` or above.
 
 You can install this package with pip:
-```
+
+```shell
 python3 -m pip install -U https://github.com/yt-dlp/yt-dlp-sample-plugins/archive/master.zip
 ```
 
 See [installing yt-dlp plugins](https://github.com/yt-dlp/yt-dlp#installing-plugins) for the other methods this plugin package can be installed.
 
+91 downloads require the use of cookies; otherwise, you cannot download. Usage method:
+
+```shell
+yt-dlp -v 'https://91porn.com/view_video.php?viewkey=number' --cookies '/path/91porn.com_cookies.txt'
+```
 
 ## Development
 
