@@ -1,10 +1,11 @@
-import urllib.parse
+import re
 from yt_dlp.extractor.common import InfoExtractor
 from yt_dlp.utils import (
     ExtractorError,
     determine_ext,
     int_or_none,
     parse_duration,
+    remove_end,
     unified_strdate,
 )
 
@@ -58,18 +59,17 @@ class Porn91IE(InfoExtractor):
         if daily_limit:
             raise ExtractorError(f'91 Porn says: Daily limit {daily_limit} videos exceeded', expected=True)
 
+        webpage_no_comments = re.sub(r'<!--.*?-->', '', webpage, flags=re.DOTALL)
         video_link_url = self._search_regex(
-            r'document\.write\(\s*strencode2\s*\(\s*((?:"[^"]+")|(?:\'[^\']+\'))', webpage, 'video link')
-        video_link_url = self._search_regex(
-            r'src=["\']([^"\']+)["\']', urllib.parse.unquote(video_link_url), 'unquoted video link')
+            r'src=["\'](https?://[^"\']+)["\']\s+type=["\']video/mp4["\']', webpage_no_comments, 'video link')
 
         formats, subtitles = self._get_formats_and_subtitle(video_link_url, video_id)
 
         return {
             'id': video_id,
-            # 'title': remove_end(self._html_extract_title(webpage).replace('\n', ''), 'Chinese homemade video').strip(),
-            'title': self._search_regex(
-                r'<h4\s+class=["\']login_register_header["\'][^>]*>\s*([^<]+)\s*</h4>', webpage, 'title', default=None),
+            'title': remove_end(self._html_extract_title(webpage).replace('\n', ''), 'Chinese homemade video').strip(),
+            # 'title': self._search_regex(
+            #     r'<h4\s+class=["\']login_register_header["\'][^>]*>\s*([^<]+)\s*</h4>', webpage, 'title', default=None),
             'formats': formats,
             'subtitles': subtitles,
             'upload_date': unified_strdate(self._search_regex(
