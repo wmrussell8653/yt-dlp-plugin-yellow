@@ -1,4 +1,4 @@
-import re
+import urllib.parse
 from yt_dlp.extractor.common import InfoExtractor
 from yt_dlp.utils import (
     ExtractorError,
@@ -59,9 +59,15 @@ class Porn91IE(InfoExtractor):
         if daily_limit:
             raise ExtractorError(f'91 Porn says: Daily limit {daily_limit} videos exceeded', expected=True)
 
-        webpage_no_comments = re.sub(r'<!--.*?-->', '', webpage, flags=re.DOTALL)
+        # webpage_no_comments = re.sub(r'<!--.*?-->', '', webpage, flags=re.DOTALL)
+        # print(webpage_no_comments)
+        # video_link_url = self._search_regex(
+        #     r'src=["\'](https?://[^"\']+)["\']\s+type=["\']video/mp4["\']', webpage, 'video link')
+
         video_link_url = self._search_regex(
-            r'src=["\'](https?://[^"\']+)["\']\s+type=["\']video/mp4["\']', webpage_no_comments, 'video link')
+            r'document\.write\(\s*strencode2\s*\(\s*((?:"[^"]+")|(?:\'[^\']+\'))', webpage, 'video link')
+        video_link_url = self._search_regex(
+            r'src=["\']([^"\']+)["\']', urllib.parse.unquote(video_link_url), 'unquoted video link')
 
         formats, subtitles = self._get_formats_and_subtitle(video_link_url, video_id)
 
